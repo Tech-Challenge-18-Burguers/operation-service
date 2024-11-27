@@ -19,7 +19,7 @@ spec:
           image: operation-service-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           envFrom:
             - secretRef:
                 name: operation-service-secret
@@ -35,12 +35,12 @@ spec:
           livenessProbe:
             httpGet:
               path: /api/v1/health
-              port: 8080
+              port: 8082
             initialDelaySeconds: 240
             periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /api/v1/health
-              port: 8080
+              port: 8082
             initialDelaySeconds: 240
             periodSeconds: 3
