@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operation-service
+  labels:
+    app: operation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: operation-service
+  template:
+    metadata:
+      labels:
+        app: operation-service
+    spec:
+      containers:
+        - name: operation-service
+          image: operation-service-app:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+          envFrom:
+            - secretRef:
+                name: operation-service-secret
+            - configMapRef:
+                name: operation-service-cm
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8082
+            initialDelaySeconds: 240
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8082
+            initialDelaySeconds: 240
+            periodSeconds: 3
