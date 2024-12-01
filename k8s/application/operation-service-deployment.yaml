@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: operation-service
-          image: operation-service-app:latest
+          image: eighteenburguers/operation-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8082
